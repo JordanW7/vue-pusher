@@ -14,11 +14,6 @@
 <script>
 export default {
   name: 'Video',
-  data() {
-    return {
-      msg: 'Video',
-    };
-  },
 };
 </script>
 

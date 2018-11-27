@@ -1,7 +1,14 @@
 <template>
-<section class="comments">
+<section id="comments-list" class="comments">
         <div class="comments-current">
-              <CommentEntry />
+          <a-comment
+          v-for="item in comments"
+          :key="`${item[0]} ${item[1]} ${item[4]}`"
+          :name="`${item[0]} ${item[1]}`"
+          :img="item[2]"
+          :comment="item[3]"
+          :time="item[4]"
+          />
         </div>
         <div class="comments-addbox">
           <a-row>
@@ -13,6 +20,7 @@
                 class="comments-input"
                 placeholder="Add a comment"
                 id="addcommentfield"
+                @change="handleChange"
               />
             </a-col>
             <a-col :xs="3" :sm="3" :md="3" :lg="6" :xl="6">
@@ -20,7 +28,7 @@
                 id="addcommentsubmit"
                 type="primary"
                 class="comments-button"
-                v-on:click="commentsubmit"
+                @click="handleSubmit"
               >
                 Add
               </a-button>
@@ -31,12 +39,51 @@
 </template>
 
 <script>
+import { subscribeToComments, submitComment } from '../../api/api';
+import CommentEntry from './commententry/commententry';
+
 export default {
   name: 'Comments',
   data() {
-    return {
-      msg: 'Comments',
+    const state = {
+      usercomment: '',
+      comments: [],
     };
+    return state;
+  },
+  components: {
+    'a-comment': CommentEntry,
+  },
+  mounted() {
+    try {
+      subscribeToComments((err, newcomment) => {
+        if (!this.comments) {
+          this.comments = [newcomment];
+        } else {
+          this.comments = [newcomment, ...this.comments];
+        }
+      });
+    } catch (err) {
+      console.log('Error subscribing to comments');
+    }
+  },
+  methods: {
+    handleSubmit() {
+      if (!this.usercomment) {
+        alert('Please provide a comment to submit');
+        return;
+      }
+      const newcomment = ['You', '', '', this.usercomment, new Date() - 5];
+      if (!this.comments) {
+        this.comments = [newcomment];
+      } else {
+        this.comments = [newcomment, ...this.comments];
+      }
+      submitComment(this.usercomment);
+    },
+    handleChange(event) {
+      this.usercomment = event.target.value;
+    },
   },
 };
 </script>

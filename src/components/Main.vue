@@ -19,11 +19,6 @@
 <script>
 export default {
   name: 'Main',
-  data() {
-    return {
-      msg: 'Welcome MuzMatch',
-    };
-  },
 };
 </script>
 

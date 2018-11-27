@@ -13,11 +13,6 @@
 <script>
 export default {
   name: 'Headerlogo',
-  data() {
-    return {
-      msg: 'Headerlogo',
-    };
-  },
 };
 </script>
 

@@ -8,8 +8,6 @@ import router from './router';
 import Comments from './components/comments/comments';
 import Video from './components/video/video';
 import Headerlogo from './components/headerlogo/headerlogo';
-import CommentEntry from './components/comments/commententry/commententry';
-
 
 Vue.component(Button.name, Button);
 Vue.component(Row.name, Row);
@@ -20,7 +18,6 @@ Vue.component(Avatar.name, Avatar);
 Vue.component(Headerlogo.name, Headerlogo);
 Vue.component(Video.name, Video);
 Vue.component(Comments.name, Comments);
-Vue.component(CommentEntry.name, CommentEntry);
 
 Vue.config.productionTip = false;
 
